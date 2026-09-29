@@ -21,7 +21,7 @@ Tick items as they're done. Claude Code: update the "Current phase" section in `
 
 ## Phase 1: Foundation
 
-- [ ] Monorepo with lint, type checks and Vitest, running in GitHub Actions on every push
+- [x] Monorepo with lint, type checks and Vitest, running in GitHub Actions on every push
 - [ ] Terraform for the VPC, EC2, S3, IAM role and Budgets alert; Docker Compose with Postgres (TimescaleDB, PostGIS) and Redis
 - [ ] Import Boston's static GTFS into versioned tables
 - [ ] Poller for MBTA VehiclePositions and TripUpdates, writing latest state to Redis and raw snapshots to S3
