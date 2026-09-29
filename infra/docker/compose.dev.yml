@@ -1,0 +1,43 @@
+# Local development databases. From the repo root: `pnpm infra:up` (needs a .env, see .env.example).
+name: headway
+
+services:
+  postgres:
+    # TimescaleDB + PostGIS in one image, ARM and Intel. Pinned so dev and production match.
+    image: timescale/timescaledb-ha:pg18.6-ts2.30.1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?copy .env.example to .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?copy .env.example to .env}
+      POSTGRES_DB: ${POSTGRES_DB:?copy .env.example to .env}
+    ports:
+      # 127.0.0.1 only: not reachable from other machines on the network.
+      - 127.0.0.1:${POSTGRES_PORT:-5432}:5432
+    volumes:
+      # This image keeps PGDATA under /home/postgres/pgdata, not /var/lib/postgresql/data.
+      - postgres-data:/home/postgres/pgdata
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  redis:
+    image: redis:8.10.2
+    # noeviction: BullMQ requires it, or Redis may drop queued jobs when memory fills.
+    # appendonly: queued jobs survive a restart.
+    command: [redis-server, --maxmemory-policy, noeviction, --appendonly, 'yes']
+    ports:
+      - 127.0.0.1:${REDIS_PORT:-6379}:6379
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres-data:
+  redis-data:

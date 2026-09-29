@@ -72,13 +72,15 @@ Run from the repo root. Keep this list accurate as scripts are added.
 - `pnpm typecheck` runs `tsc` (no emit) in every package
 - `pnpm test` runs Vitest unit tests in every package
 - `pnpm format` / `pnpm format:check` run Prettier on the whole repo (Markdown is excluded)
-- CI (`.github/workflows/ci.yml`) runs `format:check`, then lint, typecheck and test, on every push and PR
+- `pnpm infra:up` starts local Postgres (TimescaleDB + PostGIS) and Redis in Docker and waits until both are healthy; needs `.env` (`cp .env.example .env`)
+- `pnpm infra:down` stops them and keeps the data. `docker compose --env-file .env -f infra/docker/compose.dev.yml down -v` also deletes the data: ask first
+- `pnpm infra:logs`, `pnpm infra:psql`, `pnpm infra:redis` follow logs, open a SQL prompt, open a Redis prompt
+- CI (`.github/workflows/ci.yml`) runs `format:check`, validates the dev Compose file, then lint, typecheck and test, on every push and PR
 
 Not yet:
 
 - `pnpm dev` runs the local stack
 - `pnpm test:integration`
-- `docker compose -f infra/docker/compose.dev.yml up -d` starts Postgres and Redis locally
 
 ## Conventions
 
