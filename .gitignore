@@ -1,0 +1,50 @@
+# Dependencies and builds
+node_modules/
+dist/
+build/
+.turbo/
+coverage/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+
+# Local data: recorded feed snapshots, database dumps
+data/
+*.dump
+
+# Test output
+playwright-report/
+test-results/
+
+# Python (analysis/)
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+
+# Claude Code personal settings
+.claude/settings.local.json
