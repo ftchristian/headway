@@ -11,7 +11,12 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "infra:up": "docker compose --env-file .env -f infra/docker/compose.dev.yml up -d --wait",
+    "infra:down": "docker compose --env-file .env -f infra/docker/compose.dev.yml down",
+    "infra:logs": "docker compose --env-file .env -f infra/docker/compose.dev.yml logs -f",
+    "infra:psql": "docker compose --env-file .env -f infra/docker/compose.dev.yml exec postgres sh -c 'psql -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\"'",
+    "infra:redis": "docker compose --env-file .env -f infra/docker/compose.dev.yml exec redis redis-cli"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
