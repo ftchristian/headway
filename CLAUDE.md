@@ -65,12 +65,19 @@ This is the plan, not the current state. Create folders only when work needs the
 
 ## Commands
 
-None exist yet. As scripts are added, list them here and keep this list accurate. Expected:
+Run from the repo root. Keep this list accurate as scripts are added.
 
-- `pnpm install`
+- `pnpm install` installs every workspace package
+- `pnpm lint` runs ESLint (type-aware) in every package, through Turborepo
+- `pnpm typecheck` runs `tsc` (no emit) in every package
+- `pnpm test` runs Vitest unit tests in every package
+- `pnpm format` / `pnpm format:check` run Prettier on the whole repo (Markdown is excluded)
+- CI (`.github/workflows/ci.yml`) runs `format:check`, then lint, typecheck and test, on every push and PR
+
+Not yet:
+
 - `pnpm dev` runs the local stack
-- `pnpm test`, `pnpm test:integration`
-- `pnpm lint`, `pnpm typecheck`
+- `pnpm test:integration`
 - `docker compose -f infra/docker/compose.dev.yml up -d` starts Postgres and Redis locally
 
 ## Conventions
