@@ -95,7 +95,11 @@ Not yet:
 
 ## Domain facts to get right
 
-- City 1 is Boston (MBTA). Realtime feeds need no key: `https://cdn.mbta.com/realtime/VehiclePositions.pb`, `TripUpdates.pb`, `Alerts.pb` (JSON versions: swap `.pb` for `.json`). Docs: https://github.com/mbta/gtfs-documentation
+- City 1 is Orange County, California (OCTA). Realtime feeds need no key and work over HTTPS only (plain HTTP is refused): `https://api.octa.net/GTFSRealTime/protoBuf/VehiclePositions.aspx`, `tripupdates.aspx`, `servicealerts.aspx`. Static GTFS: `https://www.octa.net/current/google_transit.zip`. Time zone: `America/Los_Angeles`.
+- OCTA's feed header advances about every 5 s, but each bus reports far less often. Skip unchanged vehicles by their own timestamp, not just the header.
+- OCTA data is free for non-commercial use only; commercial use needs OCTA's written permission. Credit OCTA in the map footer.
+- Other Southern California feeds, tested: `docs/feeds/socal.md`.
+- Backup city: Boston (MBTA), kept for a future improvement or if OCTA's feed fails. Realtime feeds need no key: `https://cdn.mbta.com/realtime/VehiclePositions.pb`, `TripUpdates.pb`, `Alerts.pb` (JSON versions: swap `.pb` for `.json`). Docs: https://github.com/mbta/gtfs-documentation
 - GTFS schedule times can pass 24:00:00. `25:30:00` means 1:30 AM the next calendar day, but it belongs to the previous service day.
 - Vehicles can appear with no trip (out of service); keep them on the map but out of the analytics.
 - Trip IDs can stop matching after a schedule change. Static GTFS is re-imported daily and versioned.

@@ -59,17 +59,18 @@ Stretch items wait until after December 31; the 13-week plan does not depend on 
 
 ## Data sources
 
-Start with Boston's MBTA: its real-time feeds are public, well documented, and need no signup. Every city needs two kinds of data:
+Start with Orange County's OCTA: its real-time feeds are public, need no signup, and tag every bus with its trip, and it is local, so the map can be checked against a real bus stop. Every city needs two kinds of data:
 
 - **Static GTFS:** a zip of routes, stops, route shapes and timetables, republished every few weeks.
 - **GTFS-Realtime:** protobuf feeds polled every 10 to 30 s. VehiclePositions (where each vehicle is), TripUpdates (the agency's arrival predictions), and Alerts.
 
 | City and agency | Real-time access | Why it's on the list | Phase |
 | --- | --- | --- | --- |
-| Boston, [MBTA](https://github.com/mbta/gtfs-documentation/blob/master/reference/gtfs-realtime.md) | Public URLs for VehiclePositions, TripUpdates and Alerts, in protobuf and JSON | Cleanest feed to build the pipeline on | 1 |
+| Orange County, [OCTA](https://www.octa.net/about/about-octa/open-data/) | Public URLs for VehiclePositions, TripUpdates and Alerts, in protobuf over HTTPS; free for non-commercial use | Local, no key, and every bus carries a trip ID (about 320 buses on a weekday afternoon) | 1 |
+| Boston, [MBTA](https://github.com/mbta/gtfs-documentation/blob/master/reference/gtfs-realtime.md) | Public URLs for VehiclePositions, TripUpdates and Alerts, in protobuf and JSON | Backup if OCTA's feed fails, and a clean, well-documented city to add later | Backup |
 | New York, [MTA Bus Time](https://bustime.mta.info/wiki/Developers/GTFSRt) | Free developer key | Largest bus fleet: the real scale test | 4 |
 | SF Bay Area, [511](https://511.org/open-data/transit) | Free token; one regional feed covers 30+ agencies; default limit 60 requests per hour | Many agencies through one integration; request a higher limit early, since 60 per hour allows one poll a minute | 4 |
-| Los Angeles, [Metro](https://developer.metro.net/api/) | Documented public API is a REST bus-location service, not GTFS-Realtime | Confirm GTFS-Realtime access in week 1; add it if it exists | 4 |
+| Los Angeles, [Metro](https://developer.metro.net/) | GTFS-Realtime for bus and rail exists through Swiftly and needs an API key; Metro's own API returned no live vehicles when tested on Sep 29 | Largest fleet in the region. If access isn't granted, use Foothill Transit or Riverside Transit (open feeds, see [feeds/socal.md](feeds/socal.md)) | 4 |
 
 More cities come from the [Mobility Database](https://mobilitydatabase.org/about), a free catalog of 6,000+ transit feeds across 99+ countries, with an API.
 
@@ -414,7 +415,8 @@ A recruiter spends seconds on a project, an interviewer spends 30 minutes, and e
 ## Open decisions
 
 - [ ] Hours per week available. The roadmap assumes about 30; below 20, drop to 2 cities and the baseline predictions only.
-- [ ] Does LA Metro offer GTFS-Realtime access? If yes, it becomes city 2.
+- [x] City 1: Orange County (OCTA) instead of Boston; Boston stays as the backup. See [decision 0002](decisions/0002-orange-county-octa-as-city-1.md).
+- [ ] LA Metro's live feeds need a Swiftly key. Email Metro's developer contact to ask about individual access; if granted, LA Metro joins in Phase 4.
 - [ ] Request a higher 511 rate limit for the Bay Area regional feed.
 - [ ] Final name and domain ("Headway" is a working name).
 - [ ] Stay on AWS after the credits end, or move to a cheaper server once the build is done.
@@ -422,10 +424,12 @@ A recruiter spends seconds on a project, an interviewer spends 30 minutes, and e
 
 ## Sources
 
+- [OCTA open data](https://www.octa.net/about/about-octa/open-data/) and [terms of use](https://www.octa.net/about/about-octa/terms-of-use)
 - [MBTA GTFS-Realtime documentation](https://github.com/mbta/gtfs-documentation/blob/master/reference/gtfs-realtime.md)
+- [Southern California feed survey](feeds/socal.md)
 - [MTA Bus Time GTFS-Realtime](https://bustime.mta.info/wiki/Developers/GTFSRt)
 - [511 SF Bay transit open data](https://511.org/open-data/transit)
-- [LA Metro developer API](https://developer.metro.net/api/)
+- [LA Metro developer site](https://developer.metro.net/)
 - [Mobility Database](https://mobilitydatabase.org/about)
 - [EC2 t4g.large pricing](https://instances.vantage.sh/aws/ec2/t4g.large)
 - [AWS Free Tier credits announcement](https://aws.amazon.com/about-aws/whats-new/2025/07/aws-free-tier-credits-month-free-plan/)
