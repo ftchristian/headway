@@ -23,11 +23,11 @@ Tick items as they're done. Claude Code: update the "Current phase" section in `
 
 - [x] Monorepo with lint, type checks and Vitest, running in GitHub Actions on every push
 - [ ] Terraform for the VPC, EC2, S3, IAM role and Budgets alert; Docker Compose with Postgres (TimescaleDB, PostGIS) and Redis
-- [ ] Import Boston's static GTFS into versioned tables
-- [ ] Poller for MBTA VehiclePositions and TripUpdates, writing latest state to Redis and raw snapshots to S3
+- [ ] Import OCTA's static GTFS into versioned tables
+- [ ] Poller for OCTA VehiclePositions and TripUpdates, writing latest state to Redis and raw snapshots to S3
 - [ ] Start recording raw data by the end of week 1
 - [ ] `GET /vehicles` live in production, deployed from CI with the blue-green switch
-- [ ] Request the 511 rate increase, check LA Metro's GTFS-Realtime access, register for an MTA Bus Time key
+- [ ] Request the 511 rate increase, email LA Metro's developer contact about individual access to its live feeds, register for an MTA Bus Time key
 
 ## Phase 2: Live map
 
@@ -52,7 +52,7 @@ Tick items as they're done. Claude Code: update the "Current phase" section in `
 
 ## Phase 4: Scale and predictions
 
-- [ ] Per-agency adapters and feed registry; add New York and the Bay Area (or Los Angeles)
+- [ ] Per-agency adapters and feed registry; add New York and the Bay Area, plus LA Metro if access is granted
 - [ ] City switcher and public status page
 - [ ] Several gateway containers; k6 load test to 1,000+ clients; fix bottlenecks and publish results
 - [ ] Prediction logging for the agency and baselines; the segment-time model; evaluation report
