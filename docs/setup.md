@@ -90,14 +90,14 @@ docker compose version
 
 ## Start the local databases
 
-Postgres (with TimescaleDB and PostGIS) and Redis run in Docker. Open Docker Desktop first, then in Terminal from `~/code/headway`:
+Postgres (with TimescaleDB and PostGIS) and Redis run in Docker. Open Docker Desktop first, then in PowerShell from your headway folder (`C:\Users\<you>\headway`):
 
-```bash
-cp .env.example .env   # once; .env is never committed
-pnpm infra:up          # starts both and waits until they are healthy
+```powershell
+Copy-Item .env.example .env   # once; .env is never committed
+pnpm infra:up                 # starts both and waits until they are healthy
 ```
 
-The first start downloads about 700 MB of images. Both are reachable only from this Mac: Postgres on `localhost:5432`, Redis on `localhost:6379`.
+The first start downloads about 700 MB of images. Both are reachable only from this PC: Postgres on `localhost:5432`, Redis on `localhost:6379`.
 
 | Command | What it does |
 | --- | --- |

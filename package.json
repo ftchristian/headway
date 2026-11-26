@@ -15,7 +15,7 @@
     "infra:up": "docker compose --env-file .env -f infra/docker/compose.dev.yml up -d --wait",
     "infra:down": "docker compose --env-file .env -f infra/docker/compose.dev.yml down",
     "infra:logs": "docker compose --env-file .env -f infra/docker/compose.dev.yml logs -f",
-    "infra:psql": "docker compose --env-file .env -f infra/docker/compose.dev.yml exec postgres sh -c 'psql -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\"'",
+    "infra:psql": "docker compose --env-file .env -f infra/docker/compose.dev.yml exec postgres psql",
     "infra:redis": "docker compose --env-file .env -f infra/docker/compose.dev.yml exec redis redis-cli"
   },
   "devDependencies": {

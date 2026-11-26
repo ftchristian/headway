@@ -12,16 +12,15 @@ A live transit map plus a reliability scorecard. It shows every vehicle moving i
 
 **Phase 1: Foundation** (Nov 12 to Nov 29). Gate: `GET /v1/cities/octa/vehicles` live on the EC2 server, deployed from CI, with raw data recording running.
 
-Done: monorepo with type-aware lint, type checks and Vitest running in GitHub Actions on every push.
+Done: monorepo with type-aware lint, type checks and Vitest running in GitHub Actions on every push; Docker Compose for local Postgres (TimescaleDB + PostGIS) and Redis.
 
 Left in this phase, in order:
 
-1. Docker Compose for local Postgres (TimescaleDB + PostGIS) and Redis: already built in PR #3, which only needs merging
-2. Import OCTA's static GTFS into versioned tables
-3. Poller for OCTA VehiclePositions and TripUpdates: latest state to Redis, raw snapshots to Postgres
-4. Start recording raw data as soon as the poller works. History that was never recorded can't be analyzed later.
-5. Terraform for the VPC, EC2, S3, IAM role and a $50 Budgets alert
-6. `GET /v1/cities/octa/vehicles` on EC2, deployed from GitHub Actions (a simple pull-and-restart deploy is fine for now; blue-green waits until Phase 5)
+1. Import OCTA's static GTFS into versioned tables
+2. Poller for OCTA VehiclePositions and TripUpdates: latest state to Redis, raw snapshots to Postgres
+3. Start recording raw data as soon as the poller works. History that was never recorded can't be analyzed later.
+4. Terraform for the VPC, EC2, S3, IAM role and a $50 Budgets alert
+5. `GET /v1/cities/octa/vehicles` on EC2, deployed from GitHub Actions (a simple pull-and-restart deploy is fine for now; blue-green waits until Phase 5)
 
 Update this section whenever the phase changes, and tick items in `docs/roadmap.md`.
 
@@ -132,7 +131,7 @@ Run from the repo root. Keep this list accurate as scripts are added.
 - `pnpm typecheck` runs `tsc` (no emit) in every package
 - `pnpm test` runs Vitest unit tests in every package
 - `pnpm format` / `pnpm format:check` run Prettier on the whole repo (Markdown is excluded)
-- `pnpm infra:up` starts local Postgres (TimescaleDB + PostGIS) and Redis in Docker and waits until both are healthy; needs `.env` (`cp .env.example .env`)
+- `pnpm infra:up` starts local Postgres (TimescaleDB + PostGIS) and Redis in Docker and waits until both are healthy; needs `.env` (`Copy-Item .env.example .env` in PowerShell)
 - `pnpm infra:down` stops them and keeps the data. `docker compose --env-file .env -f infra/docker/compose.dev.yml down -v` also deletes the data: ask first
 - `pnpm infra:logs`, `pnpm infra:psql`, `pnpm infra:redis` follow logs, open a SQL prompt, open a Redis prompt
 - CI (`.github/workflows/ci.yml`) runs `format:check`, validates the dev Compose file, then lint, typecheck and test, on every push and PR
