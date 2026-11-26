@@ -5,7 +5,7 @@ A live transit map plus a reliability scorecard. It shows every vehicle moving i
 - Full spec: `docs/spec.md`
 - Roadmap and checklists: `docs/roadmap.md` (its dates are from the original plan; see "Plan from Nov 12, 2026" below)
 - Design decisions: `docs/decisions/`
-- Local machine setup (macOS): `docs/setup.md`
+- Local machine setup (Windows): `docs/setup.md`
 - Public project page: `README.md`
 
 ## Current phase
@@ -16,7 +16,7 @@ Done: monorepo with type-aware lint, type checks and Vitest running in GitHub Ac
 
 Left in this phase, in order:
 
-1. Docker Compose for local Postgres (TimescaleDB + PostGIS) and Redis
+1. Docker Compose for local Postgres (TimescaleDB + PostGIS) and Redis: already built in PR #3, which only needs merging
 2. Import OCTA's static GTFS into versioned tables
 3. Poller for OCTA VehiclePositions and TripUpdates: latest state to Redis, raw snapshots to Postgres
 4. Start recording raw data as soon as the poller works. History that was never recorded can't be analyzed later.
@@ -81,7 +81,7 @@ I'm building this to learn and to explain every part of it in job interviews. So
 - **Log decisions.** When a real design choice is made, add an entry in `docs/decisions/` using the template.
 - **Track progress.** Tick items in `docs/roadmap.md` when they're done, and keep the "Project status" table in `README.md` current.
 - **Be safe.** Never commit secrets. Ask before anything destructive: deleting files, dropping or resetting databases, `terraform apply` or `destroy`, force-pushing.
-- **I'm new to macOS.** When you give me a terminal command, say where to run it.
+- **I work on Windows.** Give terminal commands for PowerShell, not bash or zsh, and say where to run them. My PowerShell is Windows PowerShell 5.1, which doesn't support `&&`, so put each command on its own line.
 
 **First task in the next session:** update the dates in `docs/roadmap.md` to match the plan above, then continue with the first unfinished item under "Current phase".
 
@@ -150,6 +150,7 @@ Not yet:
 - Queries on raw positions always filter by time first.
 - Never poll a feed faster than it updates. One poller per feed across the system (Redis lock).
 - Configuration comes from environment variables, validated at startup. `.env.example` lists every variable; `.env` is never committed.
+- `package.json` scripts must work on Windows and macOS/Linux. pnpm runs them through cmd.exe on Windows, so no single-quoted strings, `$VAR` expansion or other sh-only syntax; put shell logic in a Node script instead.
 - Conventional commit messages: `feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`.
 - Every bug fix comes with a test that would have caught it.
 

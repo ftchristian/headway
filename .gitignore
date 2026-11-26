@@ -16,8 +16,10 @@ coverage/
 npm-debug.log*
 pnpm-debug.log*
 
-# macOS
+# Operating system files
 .DS_Store
+Thumbs.db
+desktop.ini
 
 # Editors
 .vscode/*
