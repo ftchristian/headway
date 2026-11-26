@@ -88,6 +88,27 @@ foreach ($c in 'git','node','pnpm','docker','terraform','aws','gh','k6','uv','fn
 docker compose version
 ```
 
+## Start the local databases
+
+Postgres (with TimescaleDB and PostGIS) and Redis run in Docker. Open Docker Desktop first, then in PowerShell from your headway folder (`C:\Users\<you>\headway`):
+
+```powershell
+Copy-Item .env.example .env   # once; .env is never committed
+pnpm infra:up                 # starts both and waits until they are healthy
+```
+
+The first start downloads about 700 MB of images. Both are reachable only from this PC: Postgres on `localhost:5432`, Redis on `localhost:6379`.
+
+| Command | What it does |
+| --- | --- |
+| `pnpm infra:up` | Start both databases |
+| `pnpm infra:down` | Stop them; data is kept |
+| `pnpm infra:logs` | Follow their logs (Ctrl+C to stop following) |
+| `pnpm infra:psql` | SQL prompt inside Postgres (`\q` to quit) |
+| `pnpm infra:redis` | Redis prompt (`quit` to leave) |
+
+To wipe all local data and start fresh: `docker compose --env-file .env -f infra/docker/compose.dev.yml down -v`. This deletes everything in both databases.
+
 ## Update
 
 - winget tools: `winget upgrade --all`

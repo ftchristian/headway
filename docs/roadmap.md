@@ -22,7 +22,8 @@ Tick items as they're done. Claude Code: update the "Current phase" section in `
 ## Phase 1: Foundation
 
 - [x] Monorepo with lint, type checks and Vitest, running in GitHub Actions on every push
-- [ ] Terraform for the VPC, EC2, S3, IAM role and Budgets alert; Docker Compose with Postgres (TimescaleDB, PostGIS) and Redis
+- [x] Docker Compose with Postgres (TimescaleDB, PostGIS) and Redis for local development
+- [ ] Terraform for the VPC, EC2, S3, IAM role and Budgets alert
 - [ ] Import OCTA's static GTFS into versioned tables
 - [ ] Poller for OCTA VehiclePositions and TripUpdates, writing latest state to Redis and raw snapshots to S3
 - [ ] Start recording raw data by the end of week 1

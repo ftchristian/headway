@@ -29,4 +29,6 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm format:check
+      - name: Check the dev Compose file is valid
+        run: docker compose --env-file .env.example -f infra/docker/compose.dev.yml config --quiet
       - run: pnpm turbo run lint typecheck test
